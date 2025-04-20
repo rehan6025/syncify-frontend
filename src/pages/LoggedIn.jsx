@@ -7,20 +7,27 @@ const LoggedIn = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
 
-    if (token) {
+    const accessToken = urlParams.get("access_token");
+    const refreshToken = urlParams.get("refresh_token");
+    const expiresIn = urlParams.get("expires_in");
+
+    if (accessToken && refreshToken && expiresIn) {
       fetch("http://localhost:3000/auth/spotify/set-cookie", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ token }),
-        credentials: "include" // super important for cookies
+        body: JSON.stringify({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+          expires_in: expiresIn
+        }),
+        credentials: "include"
       })
         .then(res => {
           if (res.ok) {
-            console.log("Cookie set successfully");
+            console.log("All tokens sent and cookie set successfully");
             navigate("/profile");
           } else {
             console.error("Failed to set cookie");
@@ -30,7 +37,7 @@ const LoggedIn = () => {
           console.error("Error in set-cookie request", err);
         });
     } else {
-      console.error("No token found in URL");
+      console.error("Missing token(s) in URL");
     }
   }, []);
 
