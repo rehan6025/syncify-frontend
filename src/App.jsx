@@ -8,6 +8,7 @@ import Transfer from './pages/Transfer'
 import Profile from './pages/Profile'
 import TransferPlaylistPage from './pages/TransferPlaylistPage'
 import HowItWorks from './pages/HowItWorks'
+import LoggedIn from './pages/LoggedIn'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/transfer/:playlistId" element={<TransferPlaylistPage/>} />
         <Route path="/how-it-works" element={<HowItWorks/>} />
+        <Route path="/loggedin" element={<LoggedIn/>} />
       </Routes>
     </BrowserRouter>
   )
