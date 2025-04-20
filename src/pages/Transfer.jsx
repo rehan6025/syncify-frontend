@@ -23,6 +23,7 @@
     useEffect(() => {
       const fetchPlaylists = async () => {
         const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/spotify/playlists`, {
+          method:'GET',
           credentials: "include"
         });
         const data = await res.json();
