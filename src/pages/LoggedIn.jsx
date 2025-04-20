@@ -13,7 +13,7 @@ const LoggedIn = () => {
     const expiresIn = urlParams.get("expires_in");
 
     if (accessToken && refreshToken && expiresIn) {
-      fetch("http://localhost:3000/auth/spotify/set-cookie", {
+      fetch("http://localhost:3000/auth/spotify/store-tokens", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
