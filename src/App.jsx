@@ -1,4 +1,3 @@
-
 import './App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login'
@@ -10,8 +9,32 @@ import TransferPlaylistPage from './pages/TransferPlaylistPage'
 import HowItWorks from './pages/HowItWorks'
 import LoggedIn from './pages/LoggedIn'
 
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { setSpotifyConnected, setYoutubeConnected } from './store/authSlice';
+
 function App() {
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/status`, {
+          credentials: 'include'
+        });
+        const data = await res.json();
+
+        dispatch(setSpotifyConnected(data.spotifyConnected));
+        dispatch(setYoutubeConnected(data.youtubeConnected));
+      } catch (err) {
+        console.error('Failed to check auth status:', err);
+      }
+    };
+
+    checkAuth();
+  }, [dispatch]);
+  
   return (
     <BrowserRouter>
       <Navbar/>
