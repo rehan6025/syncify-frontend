@@ -11,14 +11,18 @@
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
-      if (!spotifyConnected || !youtubeConnected) {
-        alert('connect both spotify and youtube to transfer')
-        navigate('/')
-      }
+    // Wait for auth status to load
+    if (spotifyConnected === null || youtubeConnected === null) return;
 
-    }, [spotifyConnected, youtubeConnected, navigate]);
+    if (!spotifyConnected || !youtubeConnected) {
+      alert('Connect both Spotify and YouTube to transfer.');
+      navigate('/');
+    }
+  }, [spotifyConnected, youtubeConnected, navigate]);
 
-
+    if (spotifyConnected === null || youtubeConnected === null) {
+      return <p>Checking connection status...</p>;
+    }
 
     useEffect(() => {
       const fetchPlaylists = async () => {
