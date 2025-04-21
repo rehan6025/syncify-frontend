@@ -11,7 +11,7 @@ import LoggedIn from './pages/LoggedIn'
 
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { setSpotifyConnected, setYoutubeConnected } from './store/authSlice';
+import { setSpotifyConnected, setYoutubeConnected } from './features/authSlice';
 
 function App() {
 
