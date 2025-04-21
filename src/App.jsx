@@ -33,7 +33,7 @@ function App() {
     };
 
     checkAuth();
-  }, [dispatch]);
+  }, []);
   
   return (
     <BrowserRouter>
