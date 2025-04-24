@@ -6,6 +6,7 @@ import { setSpotifyConnected } from '../features/authSlice'
 
 const LoggedIn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
