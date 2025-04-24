@@ -1,7 +1,7 @@
 # 🔄 Syncify  
 **Spotify → YouTube Playlist Transfer Tool**  
 
-(https://syncify.vercel.app)  
+(https://syncify-frontend-beta.vercel.app/)  
 *(Click "Advanced" → "Proceed" if warned)*  
 
 ![App Screenshot](./public/screenshot.png)  
