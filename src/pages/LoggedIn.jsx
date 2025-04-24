@@ -30,7 +30,10 @@ const LoggedIn = () => {
         .then(res => {
           if (res.ok) {
             console.log("All tokens sent and cookie set successfully");
-             dispatch(setSpotifyConnected(true));
+            dispatch(setSpotifyConnected(true));
+            setTimeout(() => {
+              navigate("/profile");
+            }, 100);
 
             navigate("/profile");
           } else {
