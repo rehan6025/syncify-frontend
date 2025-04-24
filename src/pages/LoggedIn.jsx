@@ -1,6 +1,8 @@
 // src/pages/LoggedIn.jsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSpotifyConnected } from '../features/authSlice'
 
 const LoggedIn = () => {
   const navigate = useNavigate();
@@ -28,6 +30,8 @@ const LoggedIn = () => {
         .then(res => {
           if (res.ok) {
             console.log("All tokens sent and cookie set successfully");
+             dispatch(setSpotifyConnected(true));
+
             navigate("/profile");
           } else {
             console.error("Failed to set cookie");
