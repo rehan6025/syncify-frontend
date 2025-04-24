@@ -30,15 +30,17 @@ const LoggedIn = () => {
         .then(res => {
           if (res.ok) {
             console.log("All tokens sent and cookie set successfully");
-            dispatch(setSpotifyConnected(true));
-            setTimeout(() => {
-              navigate("/profile");
-            }, 100);
-
-            navigate("/profile");
+      
+            return fetch("https://syncify-backend-2c5p.onrender.com/auth/status", {
+              credentials: "include"
+            });
           } else {
             console.error("Failed to set cookie");
           }
+        }).then( res => res.json())
+        .then(data => {
+          dispatch(setSpotifyConnected(data.spotifyConnected));
+          navigate("/profile");
         })
         .catch(err => {
           console.error("Error in set-cookie request", err);
