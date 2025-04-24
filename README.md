@@ -1,12 +1,24 @@
-# React + Vite
+# 🔄 Syncify  
+**Spotify → YouTube Playlist Transfer Tool**  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+(https://syncify.vercel.app)  
+*(Click "Advanced" → "Proceed" if warned)*  
 
-Currently, two official plugins are available:
+![App Screenshot](./public/screenshot.png)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features  
+- Transfer playlists between Spotify/YouTube  
+- OAuth2 secure login  
+- 95%+ track matching accuracy  
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack  
+- **Frontend**: React, Redux, TailwindCSS  
+- **Backend**: Node.js, Express ([Code](https://github.com/rehan6025/syncify-backend))  
+- **APIs**: Spotify API, YouTube Data API  
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Code  
+Explore the frontend implementation:  
+[Frontend Repository](https://github.com/rehan6025/syncify-frontend)  
+
+---
+*Note: Demo uses limited-access APIs. No user data is stored.*  
