@@ -38,8 +38,15 @@ function Navbar() {
           {/* Connection status */}
           <div className='flex gap-3'>
             {spotifyConnected ? (
-              <span className='bg-blue-800 bg-opacity-50 px-3 py-1 rounded flex items-center gap-1'>
-                <span className='w-2 h-2 bg-green-400 rounded-full'></span>
+              <span
+              className="bg-purple-500 hover:shadow-md bg-opacity-50 px-3 py-1 rounded flex items-center gap-1  cursor-pointer shadow-blue-500 
+           
+            hover:ring-blue-500 hover:ring-2 transition-ring
+            hover:bg-purple-400 transition-colors duration-300 
+            hover:scale-105 transition-transform
+             "
+            >
+              <span className="w-2 h-2 bg-green-400 rounded-full relative top-0.5 "></span>
                 Spotify
               </span>
             ) : (
