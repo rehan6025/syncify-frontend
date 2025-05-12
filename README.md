@@ -16,9 +16,5 @@
 - **Backend**: Node.js, Express ([Code](https://github.com/rehan6025/syncify-backend))  
 - **APIs**: Spotify API, YouTube Data API  
 
-## 📦 Code  
-Explore the frontend implementation:  
-[Frontend Repository](https://github.com/rehan6025/syncify-frontend)  
-
 ---
 *Note: Demo uses limited-access APIs. No user data is stored.*  
