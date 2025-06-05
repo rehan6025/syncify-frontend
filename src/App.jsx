@@ -37,20 +37,24 @@ function App() {
   
   return (
     <BrowserRouter>
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/transfer" element={<Transfer/>} />
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="/transfer/:playlistId" element={<TransferPlaylistPage/>} />
-        <Route path="/how-it-works" element={<HowItWorks/>} />
-        <Route path="/loggedin" element={<LoggedIn/>} />
-      </Routes>
-       <footer className="bg-gray-100 py-6">
-        <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© 2025 Syncify. All rights reserved.</p>
-        </div>
-      </footer>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/transfer" element={<Transfer />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/transfer/:playlistId" element={<TransferPlaylistPage />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/loggedin" element={<LoggedIn />} />
+          </Routes>
+        </main>
+        <footer className="bg-gray-100 py-6">
+          <div className="container mx-auto px-4 text-center text-gray-600">
+            <p>© 2025 Syncify. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
     </BrowserRouter>
   )
 }
