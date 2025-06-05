@@ -88,38 +88,44 @@ function TransferPlaylistPage() {
     if (!playlist) return <div>Loading...</div>
 
 
-    return (
-        <div className='bg-white min-h-screen'>
-            <div className='p-6 max-w-xl mx-auto text-center '>
-                <img src={playlist.images[0].url} alt={playlist.name} className='w-full h-64 object-cover rounded' />
-                <h1 className='text-3xl font-bold mt-4'>{playlist.name}</h1>
-                <p className="text-gray-600 mb-4">{playlist.description}</p>
+   return (
+  <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+    <div className="p-8 max-w-xl mx-auto text-center">
+      <div className="relative mb-6">
+        <img 
+          src={playlist.images[0].url} 
+          alt={playlist.name} 
+          className="w-full h-72 object-cover rounded-lg shadow-md" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg"></div>
+      </div>
+      
+      <h1 className="text-3xl font-bold mt-4 text-gray-800">{playlist.name}</h1>
+      <p className="text-gray-600 mb-6 max-w-md mx-auto">{playlist.description}</p>
 
-                <button
-                    onClick={handleTransfer}
-                   className="bg-transparent px-4 py-2 rounded cursor-pointer hover:bg-purple-400 transition-colors border-2 border-purple-300 hover:text-purple-50 duration-300 
-    hover:shadow-md shadow-blue-500
+      <button
+        onClick={handleTransfer}
+        className="bg-blue-100 px-6 py-3 rounded-lg cursor-pointer text-blue-700 font-medium
+          border border-blue-200 hover:bg-blue-600 hover:text-white
+          transition-all duration-300 shadow-sm hover:shadow-md
+          transform hover:scale-105"
+      >
+        Transfer to Youtube
+      </button>
 
-    hover:ring-blue-500 hover:ring-2 transition-ring
-             transition-colors 
-            hover:scale-105 transition-transform
-    " 
-                >
-                    Transfer to Youtube
-                </button>
-
-                {playlistUrl && (
-                    <a href={playlistUrl}
-                        target='_blank'
-                        className="mt-4 inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white text-lg rounded"
-                    >
-                        Open Playlist
-                    </a>
-                )}
-            </div>
-        </div>
-
-    )
+      {playlistUrl && (
+        <a 
+          href={playlistUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all"
+        >
+          Open Playlist
+        </a>
+      )}
+    </div>
+  </div>
+);
 }
 
 export default TransferPlaylistPage
