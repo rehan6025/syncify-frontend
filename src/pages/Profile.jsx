@@ -56,10 +56,7 @@ function Profile() {
           </div>
         </div>
         
-        <button className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg 
-          shadow-md hover:shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
-          Manage Connections
-        </button>
+       
       </div>
     </div>
   </div>
