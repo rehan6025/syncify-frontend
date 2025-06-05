@@ -89,7 +89,7 @@ function TransferPlaylistPage() {
 
 
     return (
-        <div className='bg-gradient-to-r from-blue-600 to-purple-600 min-h-screen'>
+        <div className='bg-white min-h-screen'>
             <div className='p-6 max-w-xl mx-auto text-center '>
                 <img src={playlist.images[0].url} alt={playlist.name} className='w-full h-64 object-cover rounded' />
                 <h1 className='text-3xl font-bold mt-4'>{playlist.name}</h1>
@@ -97,7 +97,13 @@ function TransferPlaylistPage() {
 
                 <button
                     onClick={handleTransfer}
-                    className="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg rounded"
+                   className="bg-transparent px-4 py-2 rounded cursor-pointer hover:bg-purple-400 transition-colors border-2 border-purple-300 hover:text-purple-50 duration-300 
+    hover:shadow-md shadow-blue-500
+
+    hover:ring-blue-500 hover:ring-2 transition-ring
+             transition-colors 
+            hover:scale-105 transition-transform
+    " 
                 >
                     Transfer to Youtube
                 </button>
