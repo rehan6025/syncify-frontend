@@ -125,17 +125,6 @@ function TransferPlaylistPage() {
             className="w-full h-72 object-cover rounded-xl shadow-lg"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-xl"></div>
-
-          {/* Platform Icons */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-3">
-            <div className="bg-green-500 p-2 rounded-full shadow-lg">
-              <Music className="w-5 h-5 text-white" />
-            </div>
-            <ArrowRight className="w-5 h-5 text-white" />
-            <div className="bg-red-500 p-2 rounded-full shadow-lg">
-              <Youtube className="w-5 h-5 text-white" />
-            </div>
-          </div>
         </div>
 
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
