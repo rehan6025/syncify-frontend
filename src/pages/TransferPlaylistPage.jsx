@@ -35,10 +35,6 @@ function TransferPlaylistPage() {
   const handleTransfer = async () => {
     setIsTransferring(true);
 
-    setIsTransferring(true);
-
-    setIsTransferring(true);
-
     const res = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/auth/spotify/tracks/${playlistId}`,
       {
@@ -172,36 +168,6 @@ function TransferPlaylistPage() {
                 Please wait...
               </span>
             </div>
-          </div>
-        )}
-
-        {isTransferring && (
-          <div className="mb-6 bg-white rounded-lg shadow-md p-4">
-            <p className="text-gray-700 mb-3">Transferring your playlist...</p>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse">
-                <div
-                  className="h-full w-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
-                  style={{ animation: "shimmer 2s infinite" }}
-                ></div>
-              </div>
-            </div>
-            <p className="text-sm text-blue-600 mt-2">Please wait...</p>
-          </div>
-        )}
-
-        {isTransferring && (
-          <div className="mb-6 bg-white rounded-lg shadow-md p-4">
-            <p className="text-gray-700 mb-3">Transferring your playlist...</p>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse">
-                <div
-                  className="h-full w-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
-                  style={{ animation: "shimmer 2s infinite" }}
-                ></div>
-              </div>
-            </div>
-            <p className="text-sm text-blue-600 mt-2">Please wait...</p>
           </div>
         )}
 
