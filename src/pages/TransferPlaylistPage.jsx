@@ -1,131 +1,243 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Music, Youtube, ArrowRight, Loader } from "lucide-react";
 
-
+//using fetches to transfer playlists
 function TransferPlaylistPage() {
-    const { playlistId } = useParams();
-    const [playlist, setPlaylist] = useState(null);
-    const [playlistUrl, setPlaylistUrl] = useState("");
-    const navigate = useNavigate();
+  const { playlistId } = useParams();
+  const [playlist, setPlaylist] = useState(null);
+  const [playlistUrl, setPlaylistUrl] = useState("");
+  const [isTransferring, setIsTransferring] = useState(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchPlaylist = async () => {
-            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/spotify/playlists`, {
-                credentials: "include"
-            });
-
-            const data = await res.json();
-
-            const selected = data.find(p => (p.id === playlistId));
-            if (!selected) {
-                alert("playlist not found")
-                navigate('/transfer')
-                return;
-            }
-            setPlaylist(selected);
+  useEffect(() => {
+    const fetchPlaylist = async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/spotify/playlists`,
+        {
+          credentials: "include",
         }
-        fetchPlaylist();
-    }, [playlistId]);
+      );
 
-    const handleTransfer = async () => {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/spotify/tracks/${playlistId}`, {
-            credentials: 'include'
-        })
-        const data = await res.json();
+      const data = await res.json();
 
-        const transferRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/youtube/batch-match`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ playlistId, spotifyTracks: data })
-        })
-
-        const response = await transferRes.json();
-        console.log(response);
-
-        const videos = response.results;
-
-        const createPlaylist = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/youtube/playlists`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title: `${playlist.name} - Syncify` })
-        })
-        const playlistData = await createPlaylist.json();
-
-        //Getting youtube playlist link 
-        if (playlistData?.id) {
-            setPlaylistUrl(`https://www.youtube.com/playlist?list=${playlistData.id}`);
-            console.log('New playlist URL will be set');
-        } else {
-            console.error('Failed to get playlist ID:', playlistData);
-        }
-
-        //https://www.youtube.com/playlist?list=PLBHubnbSvTmQami9Sr8Mb5Rg5stZJ2e_u
-
-        const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-        for (const video of videos) {
-            const add = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/youtube/playlists/${playlistData.id}/items`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ videoId: video.youtubeId })
-            })
-
-            await wait(300);
-        }
-
-        alert("transfer complete");
+      const selected = data.find((p) => p.id === playlistId);
+      if (!selected) {
+        alert("playlist not found");
+        navigate("/transfer");
+        return;
+      }
+      setPlaylist(selected);
     };
+    fetchPlaylist();
+  }, [playlistId]);
 
-    if (!playlist) return <div>Loading...</div>
+  const handleTransfer = async () => {
+    setIsTransferring(true);
 
+    setIsTransferring(true);
 
-   return (
-  <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
-    <div className="p-8 max-w-xl mx-auto text-center">
-      <div className="relative mb-6">
-        <img 
-          src={playlist.images[0].url} 
-          alt={playlist.name} 
-          className="w-full h-72 object-cover rounded-lg shadow-md" 
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg"></div>
+    setIsTransferring(true);
+
+    const res = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/spotify/tracks/${playlistId}`,
+      {
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+
+    const transferRes = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/youtube/batch-match`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ playlistId, spotifyTracks: data }),
+      }
+    );
+
+    const response = await transferRes.json();
+    const videos = response.results;
+
+    const createPlaylist = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/auth/youtube/playlists`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: `${playlist.name} - Syncify` }),
+      }
+    );
+    const playlistData = await createPlaylist.json();
+
+    if (playlistData?.id) {
+      setPlaylistUrl(
+        `https://www.youtube.com/playlist?list=${playlistData.id}`
+      );
+    } else {
+      console.error("Failed to get playlist ID:", playlistData);
+    }
+
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    for (let i = 0; i < videos.length; i++) {
+      const video = videos[i];
+
+      await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/auth/youtube/playlists/${
+          playlistData.id
+        }/items`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ videoId: video.youtubeId }),
+        }
+      );
+
+      await wait(300);
+    }
+
+    setIsTransferring(false);
+    alert("transfer complete");
+  };
+
+  if (!playlist)
+    return (
+      <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
+          <p className="text-gray-600">Loading playlist...</p>
+        </div>
       </div>
-      
-      <h1 className="text-3xl font-bold mt-4 text-gray-800">{playlist.name}</h1>
-      <p className="text-gray-600 mb-6 max-w-md mx-auto">{playlist.description}</p>
+    );
 
-      <button
-        onClick={handleTransfer}
-        className="bg-blue-100 px-6 py-3 rounded-lg cursor-pointer text-blue-700 font-medium
-          border border-blue-200 hover:bg-blue-600 hover:text-white
-          transition-all duration-300 shadow-sm hover:shadow-md
-          transform hover:scale-105"
-      >
-        Transfer to Youtube
-      </button>
+  return (
+    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
+      <div className="p-8 max-w-2xl mx-auto text-center">
+        <div className="relative mb-6 max-w-md mx-auto">
+          <img
+            src={playlist.images[0].url}
+            alt={playlist.name}
+            className="w-full h-72 object-cover rounded-xl shadow-lg"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-xl"></div>
 
-      {playlistUrl && (
-        <a 
-          href={playlistUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all"
+          {/* Platform Icons */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-3">
+            <div className="bg-green-500 p-2 rounded-full shadow-lg">
+              <Music className="w-5 h-5 text-white" />
+            </div>
+            <ArrowRight className="w-5 h-5 text-white" />
+            <div className="bg-red-500 p-2 rounded-full shadow-lg">
+              <Youtube className="w-5 h-5 text-white" />
+            </div>
+          </div>
+        </div>
+
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          {playlist.name}
+        </h1>
+        <p className="text-gray-600 mb-2">{playlist.description}</p>
+        <p className="text-sm text-gray-500 mb-8">
+          {playlist.tracks?.total} tracks
+        </p>
+
+        {/* Loading Bar */}
+        {isTransferring && (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div className="mb-4">
+              <p className="text-gray-700 font-medium mb-3">
+                Transferring your playlist...
+              </p>
+
+              {/* Continuous Loading Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse">
+                  <div className="h-full w-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-[shimmer_2s_infinite]"></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-2">
+              <Loader className="w-4 h-4 animate-spin text-blue-600" />
+              <span className="text-sm text-blue-600 font-medium">
+                Please wait...
+              </span>
+            </div>
+          </div>
+        )}
+
+        {isTransferring && (
+          <div className="mb-6 bg-white rounded-lg shadow-md p-4">
+            <p className="text-gray-700 mb-3">Transferring your playlist...</p>
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse">
+                <div
+                  className="h-full w-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
+                  style={{ animation: "shimmer 2s infinite" }}
+                ></div>
+              </div>
+            </div>
+            <p className="text-sm text-blue-600 mt-2">Please wait...</p>
+          </div>
+        )}
+
+        {isTransferring && (
+          <div className="mb-6 bg-white rounded-lg shadow-md p-4">
+            <p className="text-gray-700 mb-3">Transferring your playlist...</p>
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse">
+                <div
+                  className="h-full w-full bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
+                  style={{ animation: "shimmer 2s infinite" }}
+                ></div>
+              </div>
+            </div>
+            <p className="text-sm text-blue-600 mt-2">Please wait...</p>
+          </div>
+        )}
+
+        <button
+          onClick={handleTransfer}
+          disabled={isTransferring}
+          className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+            isTransferring
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-blue-100 text-blue-700 cursor-pointer hover:bg-blue-600 hover:text-white transform hover:scale-105"
+          } border border-blue-200 shadow-sm hover:shadow-md`}
         >
-          Open Playlist
-        </a>
-      )}
+          {isTransferring ? (
+            <div className="flex items-center gap-2">
+              <Loader className="w-5 h-5 animate-spin" />
+              Transferring...
+            </div>
+          ) : (
+            "Transfer to YouTube"
+          )}
+        </button>
+
+        {playlistUrl && (
+          <a
+            href={playlistUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          >
+            <Youtube className="w-5 h-5" />
+            Open YouTube Playlist
+          </a>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
-export default TransferPlaylistPage
+export default TransferPlaylistPage;
