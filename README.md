@@ -9,7 +9,7 @@
 ## ✨ Features  
 - Transfer playlists between Spotify/YouTube  
 - OAuth2 secure login  
-- 95%+ track matching accuracy  
+- 98%+ track matching accuracy  
 
 ## 🛠️ Tech Stack  
 - **Frontend**: React, Redux, TailwindCSS  
